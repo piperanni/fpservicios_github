@@ -1,0 +1,28 @@
+<form action="/nuevo_frigorifico" method="POST" class="mt-5">
+    <h4 class="">Agregar nuevo Frigorífico</h4>
+    <div class="mb-3 mt-5">
+      <label class="form-label">Nombre </label>
+      <input  type="text" name="nombre" class="form-control" placeholder=" Ingrese Nombre " required>
+      {% with messages = get_flashed_messages(category_filter=["errorFrigorifico"]) %}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+    </div>
+    <div class="mb-3 mt-5">
+      <label class="form-label">Ciudad </label>
+      <input type="text" name="ciudad"  class="form-control" placeholder=" Ingrese Ciudad " required>
+    </div>
+    <div class="mb-3 mt-5">
+      <label  class="form-label">Dirección</label>
+      <input  type="txt" name="direccion" class="form-control" placeholder="ingrese Dirección" required>
+    </div>
+
+    <button  class="btn btn-primary">Agregar</button>
+  </form>

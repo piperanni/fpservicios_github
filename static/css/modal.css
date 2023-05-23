@@ -1,0 +1,22 @@
+section.mimodal{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #00000080;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    pointer-events: auto;
+}
+section.mimodal div#card{
+    width: 30rem;
+    position: relative;
+    background-color: #fff;
+    border-radius: .5rem;
+    padding: 2rem;
+
+
+}

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>Editar Frigorífico</title>
+{% endblock%}
+{% block content %}
+<form action="/editar_frigorifico/{{frigorifico.id}}" method="POST" class="col-6 mt-5">
+    <h4 class="">Editar Frigorífico</h4>
+    <div class="mb-3 mt-5">
+      <label class="form-label">Nombre </label>
+      <input  type="text" name="nombre" class="form-control" value="{{frigorifico.nombre}}">
+        {% with messages = get_flashed_messages()%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+    </div>
+    <div class="mb-3 mt-5">
+      <label class="form-label">Ciudad </label>
+      <input type="text" name="ciudad"  class="form-control" value="{{frigorifico.ciudad}}">
+
+    </div>
+    <div class="mb-3 mt-5">
+      <label  class="form-label">Dirección</label>
+      <input  type="txt" name="direccion" class="form-control" value="{{frigorifico.direccion}}">
+    </div>
+
+    <button  class="btn btn-primary">Editar</button>
+  </form>
+  {% endblock %}

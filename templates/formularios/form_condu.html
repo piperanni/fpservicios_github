@@ -1,0 +1,53 @@
+<form action="/nuevo_conductor" method="POST" class = "mt-5">
+    <h4 class="">Agregar nuevo Conductor </h4>
+    <div class="mb-3 mt-4">
+      <label class="form-label">Nombre Conductor </label>
+      <input  type="text" name="nombre" class="form-control" placeholder=" Ingrese Nombre " required>
+    </div>
+    
+    <div class="mb-3 mt-4">
+      <label  class="form-label">Apellido</label>
+      <input  type="txt" name="apellido" class="form-control" placeholder="ingrese Apellido" required>
+    </div>
+    <div class="mb-3 mt-4">
+        <label  class="form-label">Registro General de Identidad</label>
+        <input  type="number" name="rg" class="form-control" placeholder="ingrese RG" required>
+        {% with messages = get_flashed_messages(category_filter=["errorRg"])%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+    </div>
+    <div class="mb-3 mt-4">
+        <label  class="form-label">Seleccione Transporte</label>
+        <select name= "idTransporte" class="form-select" aria-label="Default select example">
+          {% for transporte in transportes %}
+          <option  value="{{transporte.id}}">{{transporte.nombre}}</option>
+          {% endfor %}
+        
+        </select>
+        <label  class="form-label mt-4">Seleccione Patente Camión</label>
+        <select name= "idPatenteCamion" class="form-select" aria-label="Default select example">
+          {% for patente in patenteCamiones %}
+          <option  value="{{patente.id}}">{{patente.patente_camion}}</option>
+          {% endfor %}
+        
+        </select>
+        <label  class="form-label mt-4">Seleccione Patente Rampla</label>
+        <select name= "idPatenteRampla" class="form-select" aria-label="Default select example">
+          {% for patente  in patenteRamplas %}
+          <option  value="{{patente.id}}">{{patente.patente_rampla}}</option>
+          {% endfor %}
+        
+        </select>
+    </div>
+    
+
+    <button  class="btn btn-primary btn-sm">Agregar</button>
+  </form>

@@ -1,0 +1,59 @@
+<form action="/nuevo_camion" method="POST" class="mt-5">
+    <h4 class="">Agregar nuevo Camion </h4>
+    <div class="mb-2 mt-4">
+      <label class="form-label">Marca </label>
+      <input  type="text" name="marca" class="form-control" placeholder=" Ingrese marca " required>
+    </div>
+    
+    <div class="mb-2 mt-4">
+      <label  class="form-label">Póliza de seguro</label>
+      <input  type="txt" name="poliza" class="form-control" placeholder="ingrese póliza" required>
+    </div>
+    <div class="mb-2 mt-4">
+        <label  class="form-label">Vencimiento póliza</label>
+        <input  type="date" name="vencimiento" class="form-control" placeholder="ingrese fecha" required>
+        <!-- recorriendo los mensajes -->
+        {% with messages = get_flashed_messages(category_filter=["errorFecha"])%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+    </div>
+    <div class="mb-2 mt-4">
+        <label  class="form-label">Seleccione Transporte</label>
+        <select name= "idTransporte" class="form-select" aria-label="Default select example">
+          {% for transporte in transportes %}
+          <option  value="{{transporte.id}}">{{transporte.nombre}}</option>
+          {% endfor %}
+        
+        </select>
+    </div>
+    <div class="mb-3 mt-4">
+        <label  class="form-label">Patente</label>
+        <input  type="text" name="patente" class="form-control" placeholder="ingrese patente" required>
+        {% with messages = get_flashed_messages(category_filter=["errorPatente"])%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+    </div>
+    <div class="mb-3 mt-4">
+        <label  class="form-label">Tara tracto</label>
+        <input  type="number" name="tara" class="form-control" placeholder="ingrese tara" required>
+    </div>
+    
+
+    <button  class="btn btn-primary btn-sm">Agregar</button>
+  </form>

@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>Conductores</title>
+{% endblock%}
+{% block content %}
+<div class="container mt-5">
+  <div class="row d-flex justify-content-between">
+      <div class="col-4">
+        {% include '/formularios/form_condu.html' %}
+      </div>
+      <div class="col-5 mt-5">
+         {%if conductorid != undefined %}
+                <section class="mimodal">
+                    <div id="card" >
+                        <div class="d-flex justify-content-between">
+                            <h2>    Desea continuar?</h2>
+                            <a href="/conductores" class="btn-close"></a>
+                        </div>
+                        <hr>
+                        <p class="">Se eliminará el conductor <strong>{{conductorid.nombre}}</strong></p>
+                        <p> Considere que los embarques asociados a este conductor tambien se eliminarán </p>
+
+                        <div class = "text-end">
+                            <a href="/conductores" class="btn btn-info btn-sm">cancelar</a>
+                            <a href="{{ url_for('conductores.eliminar_conductor',id=conductorid.id) }}" class="btn btn-danger btn-sm">eliminar</a>
+                        </div>
+
+                    </div>
+                </section>
+            {% endif %}
+
+            {% with messages = get_flashed_messages(category_filter=["success","update","delete"])%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+
+        {% for conductor in conductores %}
+          <div class="card mb-2">
+              <div class="card-header">
+                <h4>{{conductor.nombre}} {{conductor.apellido}}</h4>
+              </div>
+              <div class="card-body">
+                  <p class="card-text">Registro General:<strong>{{conductor.rg}}</strong>, Transporte:<strong>{{conductor.transporte}}</strong> </p>
+                  <p class="card-text">Patentes:<strong> {{conductor.patente_camion}} // {{conductor.patente_rampla}}</strong></p>
+                <a href="{{ url_for('conductores.editar_conductor',id=conductor.id) }}" class="btn btn-info btn-sm">Editar</a>
+                <a href="{{ url_for('conductores.vista_modal',id=conductor.id) }}" class="btn btn-danger btn-sm">Eliminar</a>
+              </div>
+          </div>
+         {% endfor %} 
+            
+      </div>
+  </div>
+</div>
+{% endblock %}

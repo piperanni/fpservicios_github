@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>Ramplas</title>
+{% endblock%}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-between">
+            <div class="col-4">
+                {% include '/formularios/form_ramplas.html' %}
+            </div>
+            <div class="col-6 mt-5">
+                {%if ramplaid != undefined %}
+                <section class="mimodal">
+                    <div id="card" >
+                        <div class="d-flex justify-content-between">
+                            <h2>    Desea continuar?</h2>
+                            <a href="/ramplas" class="btn-close"></a>
+                        </div>
+                        <hr>
+                        <p class="">Se eliminará la  rampla <strong>{{ramplaid.patente_rampla}}</strong></p>
+                        <p> Considere que los conductores tengan asignado esta rampla se eliminarán </p>
+
+                        <div class = "text-end">
+                            <a href="/ramplas" class="btn btn-info btn-sm">cancelar</a>
+                            <a href="{{ url_for('ramplas.eliminar_rampla',id=ramplaid.id) }}" class="btn btn-danger btn-sm">eliminar</a>
+                        </div>
+
+                    </div>
+                </section>
+            {% endif %}
+            {% with messages = get_flashed_messages(category_filter=["success","update","delete"])%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+
+                {% for rampla in ramplas %}
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            {% if rampla.fecha_advertencia <= fechaActual <= rampla.vencimiento_poliza %}
+                                <div class="alert  alert-warning alert-dismissible text-center" role="alert">
+                                    <strong>Póliza próxima a vencer</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                                </div>
+                            {% else %}
+                                    {% if rampla.vencimiento_poliza < fechaActual %}
+                                        <div class="alert  alert-danger alert-dismissible text-center" role="alert">
+                                            <strong>Póliza vencida</strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                                        </div>
+                                    {% endif %}
+                            {% endif %}
+                            <H3>Patente: <strong>{{rampla.patente_rampla}} </strong></H3>
+
+                  
+                        </div>
+                         <div class="card-body">
+                             <p class="card-text">Transporte: <strong> {{rampla.transporte}}</strong></p>
+                            <p class="card-text">Póliza seguro: <strong>{{rampla.poliza}}</strong>,Vencimiento seguro: <strong>{{rampla.vencimiento_orden}} </strong>,Tara: <strong>{{rampla.tara_rampla}} </strong></p>
+                            <a href="{{ url_for('ramplas.editar_rampla',id=rampla.id) }}" class="btn btn-info btn-sm">Editar</a>
+                            <a href="{{ url_for('ramplas.vista_modal',id=rampla.id) }}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </div>
+                    </div>
+                {% endfor %}
+              
+            </div>
+        </div>
+    </div>
+{% endblock  %}

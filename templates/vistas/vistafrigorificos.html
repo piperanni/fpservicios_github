@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>Frigoríficos</title>
+{% endblock%}
+{% block content %}
+<div class="container mt-5">
+   {%if frigoid != undefined %}
+                <section class="mimodal">
+                    <div id="card" >
+                        <div class="d-flex justify-content-between">
+                            <h2>    Desea continuar?</h2>
+                            <a href="/transportes" class="btn-close"></a>
+                        </div>
+                        <hr>
+                        <p class="">Se eliminará el frigorífico <strong>{{frigoid.nombre}}</strong></p>
+                        <p> Considere que los embarques que esten asociados a este frigorífico se eliminarán</p>
+
+                        <div class = "text-end">
+                            <a href="/frigorificos" class="btn btn-info btn-sm">cancelar</a>
+                            <a href="{{ url_for('frigorificos.eliminar_frigorifico',id=frigoid.id) }}" class="btn btn-danger btn-sm">eliminar</a>
+                        </div>
+
+                    </div>
+                </section>
+    {% endif %}
+
+  <div class="row d-flex justify-content-between">
+      <div class="col-4">
+        {% include '/formularios/form_frigo.html' %}
+      </div>
+      <div class="col-5 mt-5">
+          {% with messages = get_flashed_messages(category_filter=["success","update","delete"]) %}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+        {% for frigorifico in frigorificos %}
+          <div class="card mb-2">
+              <div class="card-header">
+                <H3>Nombre: <strong>{{frigorifico.nombre}} </strong></H3>
+                
+              </div>
+              <div class="card-body">
+                <p class="card-text">Ciudad: <strong>{{frigorifico.ciudad}} </strong>,Dirección: <strong>{{frigorifico.direccion}} </strong></p>
+                <p class="card-text"></p>
+                <a href="{{ url_for('frigorificos.editar_frigorifico',id=frigorifico.id) }}" class="btn btn-info btn-sm">Editar</a>
+                <a href="{{ url_for('frigorificos.vista_modal',id=frigorifico.id) }}" class="btn btn-danger btn-sm">Eliminar</a>
+              </div>
+          </div>
+         {% endfor %} 
+            
+      </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>Transportes</title>
+{% endblock%}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row d-flex justify-content-between">
+        <div class="col-4">
+          {% include '/formularios/form_transp.html' %}
+        </div>
+        <div class="col-5 mt-5">
+          {%if transp != undefined %}
+                <section class="mimodal">
+                    <div id="card" >
+                        <div class="d-flex justify-content-between">
+                            <h2>    Desea continuar?</h2>
+                            <a href="/transportes" class="btn-close"></a>
+                        </div>
+                        <hr>
+                        <p class="">Se eliminará a <strong>{{transp.nombre}}</strong></p>
+                        <p> Considere que los camiones y ramplas que esten asociados a este transporte se eliminarán también</p>
+
+                        <div class = "text-end">
+                            <a href="/transportes" class="btn btn-info btn-sm">cancelar</a>
+                            <a href="{{ url_for('transportes.eliminar_transporte',id=transp.id) }}" class="btn btn-danger btn-sm">eliminar</a>
+                        </div>
+
+                    </div>
+                </section>
+            {% endif %}
+
+            {% with messages = get_flashed_messages(category_filter=["success","update","delete"])%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+          {% for transporte in transportes %}
+
+            <div class="card mb-2">
+                <div class="card-header">
+                  <h3 class=""> {{transporte.nombre}}</h3>
+
+                </div>
+                <div class="card-body">
+                  <p class="card-text">Dirección: <strong>{{transporte.direccion}} </strong></p>
+                  <a href="{{ url_for('transportes.editar_transporte',id=transporte.id) }}" class="btn btn-info btn-sm">Editar</a>
+                  <a href="{{ url_for('transportes.vista_modal',id=transporte.id) }}" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+            </div>
+            {% endfor %}
+
+
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

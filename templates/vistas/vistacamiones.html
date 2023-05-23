@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>Camiones </title>
+{% endblock%}
+{% block content %}
+
+    <div class="row d-flex justify-content-between">
+        <div class="col-4">
+
+          {% include '/formularios/form_camiones.html' %}
+        </div>
+        <div class="col-6 mt-5">
+            {%if camion != undefined %}
+                <section class="mimodal">
+                    <div id="card" >
+                        <div class="d-flex justify-content-between">
+                            <h2>    Desea continuar?</h2>
+                            <a href="/camiones" class="btn-close"></a>
+                        </div>
+                        <hr>
+                        <p class="">Se eliminará el camión patente <strong>{{camion.patente_camion}}</strong></p>
+                        <p> Considere que los conductores que tengan asignados esta patente tambien se eliminarán</p>
+
+                        <div class = "text-end">
+                            <a href="/camiones" class="btn btn-info btn-sm">cancelar</a>
+                            <a href="{{ url_for('camiones.eliminar_camion',id=camion.id) }}" class="btn btn-danger btn-sm">eliminar</a>
+                        </div>
+
+                    </div>
+                </section>
+            {% endif %}
+
+            {% with messages = get_flashed_messages(category_filter=["success","update","delete"])%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+          {% for camion in camiones %}
+            <div style="" class="card mb-2 border-warning">
+
+                <div class="card-header">
+                    {% if camion.fecha_advertencia <= fechaActual <= camion.vencimiento %}
+                        <div class="alert  alert-warning alert-dismissible text-center" role="alert">
+                            <strong>Póliza próxima a vencer</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                        </div>
+                        {% else %}
+                            {% if camion.vencimiento < fechaActual %}
+                                <div class="alert  alert-warning alert-dismissible text-center" role="alert">
+                            <strong>Póliza vencida</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                        </div>
+                            {% endif %}
+                    {% endif %}
+                  <H4>Patente: <strong>{{camion.patente_camion}}</strong></H4>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Transporte: <strong>{{camion.transporte}}</strong>, Marca: <strong>{{camion.marca}}</strong></p>
+                  <p class="card-text">Póliza seguro n°: <strong>{{camion.poliza}}</strong>  , vencimiento: <strong style="color:#FF5733">{{camion.vencimiento_orden}}</strong>, Tara: <strong>{{camion.tara_camion}} </strong> </p>
+
+                  <a href="{{ url_for('camiones.editar_camion',id=camion.id) }}" class="btn btn-info btn-sm">Editar</a>
+                  <a href="{{ url_for('camiones.vista_modal',id=camion.id) }}" class="btn btn-danger btn-sm">Eliminar</a>
+                </div>
+            </div>
+           {% endfor %} 
+              
+        </div>
+    </div>
+
+{% endblock %}

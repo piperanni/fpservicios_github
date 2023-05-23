@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>Reporte Anual Embarques</title>
+{% endblock%}
+{% block content %}
+<div class="row d-flex justify-content-between mt-5">
+    <h3 class="text-center">Total embarques anuales por destino</h3>
+    <div class="col-6 mt-5">
+                <h4 class="text-center">{{anios[0]}}</h4>
+                <div id = "chart2"></div>
+    </div>
+    <div class="col-6 mt-5">
+                <h4 class="text-center">{{anios[1]}}</h4>
+                <div id = "chart1"></div>
+    </div>
+
+
+</div>
+
+<div class="row d-flex justify-content-between mt-4">
+    <h3 class="text-center">Total embarques anuales por transporte</h3>
+    <div class="col-6 mt-5">
+                <h4 class="text-center">{{anios[0]}}</h4>
+                <div id = "chart4"></div>
+    </div>
+    <div class="col-6 mt-5">
+                <h4 class="text-center">{{anios[1]}}</h4>
+                <div id = "chart3"></div>
+    </div>
+
+
+</div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript">
+    var graph1 = {{graph1JSON|safe}};
+    var graph2 = {{graph2JSON|safe}};
+    var graph3 = {{graph3JSON|safe}};
+    var graph4 = {{graph4JSON|safe}};
+    Plotly.plot("chart1", graph1, {});
+    Plotly.plot("chart2", graph2, {});
+    Plotly.plot("chart3", graph3, {});
+    Plotly.plot("chart4", graph4, {});
+</script>
+
+{% endblock %}

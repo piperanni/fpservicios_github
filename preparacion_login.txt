@@ -1,0 +1,27 @@
+ideas:
+#necesito un html : login.html
+# un modelado para crear el usuario por sqlalchemy = models/usuario.py
+y manejarlo y accediendo a ellos por los metodos de la sqlalchemy
+# en las rutas estaran todas funciones de comprobacion de usuario y contraseña tambien la ruta del login
+
+# pasos:
+# crear la tabla usuario desde sqlalchemy .......................... listo y comprobado
+# dejar como index el formulario y mostrar ......................... listo y probado
+
+  el formulario es decir crear el formulario y mostrarlo ........... listo y probado
+# definir los name del formulario y mostrarlo por pantalla .......... listo
+# hacer comprobacion de usuario ..................................... listo
+# hacer comprobacion de contraseña .................................. listo
+# gestion de mensajes con flash ..................................... listo
+
+# login para usar los datos y mostrarlos
+# logout para salir de una sesion completamente
+
+# bloquear acceso a las paginas para que solo se ingrese por login
+
+
+# csrf para seguridad
+
+
+
+pbkdf2:sha256:600000$4ajuhI2BJJdOyuXx$5e50bacbc96f11c94f30f5169e6cf84689859a9ada63e43cc8920703db0d1902

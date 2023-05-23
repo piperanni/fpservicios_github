@@ -1,18 +1,23 @@
 from sqlalchemy import Column,Integer,String
-
 from utils.db import Base
-
+from sqlalchemy.orm import relationship
 
 class Frigorifico(Base):
-    __tablename__ = "frigorifico"
-    __table_args__ = {'sqlite_autoincrement':True}
-    id = Column(Integer, primary_key=True)
+    __tablename__ = "frigorificos"
+    
+    id = Column(Integer,primary_key=True)
     nombre = Column(String(100),nullable=False)
-    descripcion = Column(String(100),nullable=False)
+    ciudad = Column(String(100),nullable=False)
+    direccion = Column(String(100),nullable=False)
 
-    def __int__(self,nombre,descripcion):
+    # RELACIONES CON LAS TABLAS QUE HEREDAN SU CLAVE PRIMARIA
+    frigorificoEmbarques = relationship('Embarque')
+
+
+    def __init__(self,nombre,ciudad,direccion):
         self.nombre = nombre
-        self.descripcion = descripcion
+        self.ciudad = ciudad
+        self.direccion = direccion
 
     def __str__(self):
-        return " frigorifico: {},{}".format(self.nombre,self.descripcion)
+        return " frigorifico: {},{},{}".format(self.nombre,self.ciudad,self.direccion)

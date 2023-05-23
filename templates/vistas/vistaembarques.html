@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>Inicio Fp Embarques</title>
+{% endblock%}
+
+{% block content %}
+    <div class="row">
+        <h3 style="color:white;"class="text-center mt-2">Nuevo instructivo de embarque</h3>
+        {% include '/formularios/form_embarques.html' %}
+
+    </div>
+    {%if embid != undefined %}
+                <section class="mimodal">
+                    <div id="card" >
+                        <div class="d-flex justify-content-between">
+                            <h2>    Desea continuar?</h2>
+                            <a href="/embarques" class="btn-close"></a>
+                        </div>
+                        <hr>
+                        <p class="">Se eliminará el embarque asignado al conductor<strong>{{embid.conductor}}</strong></p>
+
+                        <div class = "text-end">
+                            <a href="/embarques" class="btn btn-info btn-sm">cancelar</a>
+                            <a href="{{ url_for('embarques.eliminar_embarque',id=embid.id) }}" class="btn btn-danger btn-sm">eliminar</a>
+                        </div>
+
+                    </div>
+                </section>
+    {% endif %}
+
+     <div class="row d-flex justify-content-center mt-3">
+         {% with messages = get_flashed_messages(category_filter=["success","update","delete"])%}
+              {% if messages %}
+              <br>
+                {% for message in messages %}
+                  <div class=" col-4 alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {%endwith%}
+     </div>
+    <div style="color:white;" class="row mt-4">
+
+        <h3 class="text-center mt-5">Lista de embarques</h3>
+        <table style="color:white;" class="col-12 table table-hover table-bordered border-primary">
+            <thead>
+                <tr>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Conductor</th>
+                    <th scope="col">Fecha carga</th>
+                    <th scope="col">Transporte</th>
+                    <th scope="col">Patentes</th>
+                    <th scope="col">Frigorífico</th>
+                    <th scope="col">Destino</th>
+                    <th scope="col">Frontera</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+                {% for embarque in embarques %}
+                <tr>
+                    <td>{{embarque.status}}</td>
+                    <td>{{embarque.nombre}} {{embarque.apellido}}</td>
+                    <td>{{embarque.fechaEmbarque}}</td>
+                    <td>{{embarque.transporte}}</td>
+                    <td>{{embarque.patente_camion}} / {{embarque.patente_rampla}}</td>
+                    <td>{{embarque.frigorifico}}</td>
+                    <td>{{embarque.destino}}</td>
+                    <td>{{embarque.frontera}}</td>
+                    <td>
+                        <a href="{{ url_for('embarques.vista_modal',id=embarque.id) }}" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="{{ url_for('embarques.editar_embarque',id=embarque.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    </td>
+
+    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

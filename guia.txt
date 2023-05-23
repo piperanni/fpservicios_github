@@ -1,7 +1,4 @@
-probando con orm SQLALCHEMY
+crud completo menos editar embarques
 
-archivos principales(complementar con video de yt sobre orden de codigo y archivos
+grafico mensual
 
-app.py
-models.py
-db.py
